@@ -31,6 +31,22 @@ void update_circle_coordinates(Circle *circle)
     {
         circle->delta.y *= -1;
     }
+
+
+    if(circle->position.x - circle->radius <= 0) {
+        circle->position.x = screenWidth / 2;
+        circle->position.y = screenHeight / 2;
+        circle->delta.x *= -1;
+
+        player_right_score++;
+    }
+
+    if(circle->position.x + circle->radius >= screenWidth) {
+        circle->position.x = screenWidth / 2;
+        circle->position.y = screenHeight / 2;
+        circle->delta.x *= -1;
+        player_left_score++;
+    }
 }
 
 
