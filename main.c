@@ -14,6 +14,7 @@ typedef struct Circle
 } Circle;
 
 
+
 void update_circle_coordinates(Circle *circle)
 {
 
@@ -35,9 +36,31 @@ int main(void)
 {
 
     Circle circle = {
-        {50,50},
+        { screenWidth / 2 ,screenHeight / 2},
         {4,4},
         10,
+    };
+
+    
+    int paddle_width = 10;
+    int paddle_height = 150;
+    int paddle_x_position = 25;
+    int paddle_y_position = screenHeight / 2  - (paddle_height / 2);
+    Rectangle left_paddle = 
+    {
+        paddle_x_position,
+        paddle_y_position,
+        paddle_width,
+        paddle_height,
+    };
+
+    
+    Rectangle right_paddle = 
+    {
+        screenWidth - paddle_x_position - paddle_width,
+        paddle_y_position,
+        paddle_width,
+        paddle_height
     };
 
     InitWindow(screenWidth, screenHeight, "raylib pong game");
@@ -51,6 +74,9 @@ int main(void)
         update_circle_coordinates(&circle);
         BeginDrawing();
         DrawCircleV(circle.position, circle.radius, PINK);
+
+        DrawRectangleRec(left_paddle, WHITE);
+        DrawRectangleRec(right_paddle, WHITE);
         EndDrawing();
     }
 
