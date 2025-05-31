@@ -1,0 +1,1 @@
+g++ main.c -o main.exe -I include/ -L lib/ -lraylib -lgdi32 -lwinmm; ./main.exe
