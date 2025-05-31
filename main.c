@@ -50,7 +50,7 @@ void update_circle_coordinates(Circle *circle)
 }
 
 
-void update_paddles_coordinate(Paddle *left_paddle, Paddle *right_paddle)
+void update_paddles_coordinate(Paddle *left_paddle, Paddle *right_paddle, Circle *circle)
 {
 
     if(IsKeyDown(KEY_W) && left_paddle->rectangle.y - left_paddle->delta >= 0)
@@ -71,6 +71,18 @@ void update_paddles_coordinate(Paddle *left_paddle, Paddle *right_paddle)
     if(IsKeyDown(KEY_DOWN) && right_paddle->rectangle.y + right_paddle->rectangle.height + right_paddle->delta <= screenHeight)
     {
         right_paddle->rectangle.y += right_paddle->delta;
+    }
+
+
+    // simple ai
+    int paddle_center = right_paddle->rectangle.y + (right_paddle->rectangle.height / 2);
+
+    if(circle->position.y > paddle_center) {
+        right_paddle->rectangle.y += right_paddle->delta;
+    }
+
+    if(circle->position.y < paddle_center) {
+        right_paddle->rectangle.y -= right_paddle->delta;
     }
 }
 
@@ -141,7 +153,7 @@ int main(void)
     {
 
         update_circle_coordinates(&circle);
-        update_paddles_coordinate(&left_paddle, &right_paddle);
+        update_paddles_coordinate(&left_paddle, &right_paddle, &circle);
         check_colision(&left_paddle, &circle);
         check_colision(&right_paddle, &circle);
         BeginDrawing();
